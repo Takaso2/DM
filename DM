@@ -1,0 +1,238 @@
+# I dont like, the way you're skidding.
+
+import asyncio
+import time
+import requests
+import json
+import proxygen
+from itertools import cycle
+import threading
+from colors import black, blue, red, green, yellow, cyan, reset, magenta, white
+import random
+
+proxies = proxygen.get_proxies()
+proxy_pool = cycle(proxies)
+proxy = next(proxy_pool)
+
+bakas = []
+with open("tokens.txt", "r", encoding="UTF-8") as tokens:
+        slaves = tokens.read().splitlines()
+        for niggers in slaves:
+            bakas.append(niggers)
+
+
+print("""%s
+
+++++++++/+///////////////////::::::::::::::::::::::::::::::::::::::::::::://////////////////////////
+++++++/////////////////:::::::::::::::---.......--::::::::::::::::::::::::::/::::///:///////////////
++++//////////////////:::::::::::::::-...............-:::::::::::::::::::::::::::::::::/::///////////
++/////////////////::::::::::::::::-...................-:::/:::::::::::::::::::::::::::::////////////
+////////////////:::::::::::::::::-............`.+sso:.----y:::::::::::::::::::::::::::://///////////
+///////////////:::::::::::::::::-------.......`/yyyyh/---:dhso/::::::::::::::::::::::::://://///////
+/////:///:/::::::::::::::::::::::-------------/ohmmhms--:ymy+:::::::::::::::::::::::::::::/:////////
+////:////:::::::::::::::::::::::-----.........++ymmdm+--yd/::::::::::::::::::::::::::::::::::///////
+///////////:::::::::::::::::::::--.........:/+ohhNmmmyosd/::-::::::::::::::::::::::::::::::::://:://
+///////::::::::::::::::::::::::::......./ohmdddmNNNNmmmmdhs::::::::::::::::::::::::::::::::://:::://
+/////::::::::::::::::::::::::::::-.....:+hmmdddddddmhdmNmmdo:::::::::::::::::::::::::::::::::/::::::
+///:/:::::::::::::::::::::::::::----...-ydmNmmmmdhmmddmNmmmy::::::::::::::::::::::::::::::::::/:::::
+///:::::::::::::::::::::::::::----------/dmmmmNNmmmmdmmNNNmNdyo:::::::::::::::::::::::::::::::::::::
+///:::::::------:--::::----------------/hddddmNmdmmmmmdmNNNNMNNmy+:::::--:::::::::::::::::::::::::::
+///::::::------------------------------oddyhddmNNmmmdddNNNNmmdhhNMm:--------::::::::::::::::::::::::
+//::::::-----------------------------.:ydd:+hdNNmmddmmmm+dNmds---/d+-------:::::::::--:--::::::--:::
+::::::-----....------------------------ydd-:hhmNNNddNNmds:hmdd---:s---------------------------------
+---------.......---........--.---------++myymmmNmmmmNNNNN+-hmd+-------------------------------------
+.-.....................................-ddsmNNNmmmmmmmmmmd::mmo---...-------------------------------
+.....````..``````.`..``````.............:+ymmmNNNNNddhdmNNy/dm+-..........--------------------------
+....````````   `.````````..............--.-ymNNNNNmdhhhmMMMyyo....--:/::+/--------------------------
+..```..``  `  ````.`  ` ``......---...--...ymNNNNMmdhhhmMMMNd:...-/+ssyhddh:.......-------.---.--://
+........`````    ``   ````........---------shNNNNNmdmmmNMMMNmd:./+syyhdyhddo.................-:/oysy
+--......```          ````..````..........-+::ymmmmshmmmNNNNmshd::+oyssyhddds/::----::::://+/:--/oyhh
+---....```         `````................:+s../hmmd+ydhdNNNNNyod/.//+syssso+ooooo++oosssyyyhhhyyhhhhh
+----....`````````````..................:///./hNNmhshdhdhmmNNmmdo...-----..--/+oossyyyyhhdddddddddhdd
+----........```````...................-/:/..+dNmmh-ydhyyddhmmmdy-............-/+ossyyhhhhhhhhdhddhds
+------..........................------/:/----ydNmd+ddhho/oodmdo---------------::+ossydmdhhhhhdhddhh:
+oooo++/:----------.......--------------:------oNmh+yys/-----o------------------/syhhydmmddddddhhhhs:
+sysssssssoooo+//////:------:+::::::::::::::-:::ddssys+::::::////++++++++++++//shdhhhhdddddddyshdhs//
+oo++++++++++++/+++//+///////+///////++////////:+yooys//////+++++o++ooooooooosyyyyyysosososyhhsydsoss
+o+++++++++++++++++++++++++++++++++++++++//////////+s+//:/+++ooooooooooooooossosssssssssooossssssssss
+oossooossss+//+o+/////+++++++++++++oosso+////+o+//++/:///+++/+++ooo+++++osyyyyyhhhhyyssooooossyhhhhy
+yysssyyyyyso+++++//::///++++osssysssyyysso++osyyo+////++//++++osyyyso+++oyyyhhdhhhhhyyyyyyysyyhhhdhh
+mdhhhddhhhhyyyyyyyyso++++ooooosyyysyhhhhhysyhhyysooshdhdhysooossssyssyyysssyhddddmmmmddddddddddddhyy
+NNmddddddddddmddhyhdhysossso+oossssssssyhhhdddhhhhhmmmddhhdddhhyyyyyyhhyssyhdddmmmmmddmmmmmmmmmmddhh
+NNNNNNNmmmddmmmmdhyhddhddddhs++++oyyssyyhhhhhdddhhddmmmmdmNNNmmmmhysyhddmmmmmmmdddhhhhdddddddddysssh
+%s
+""" % (yellow(), reset()))
+risposte = ["Yes", "y", "ye", "yEs", "yES", "Yep", "Ye", "Y"]
+
+def theintro():
+    print("""
+    
+
+    ███        ▄███████▄    ▄████████ 
+▀█████████▄   ███    ███   ███    ███ 
+   ▀███▀▀██   ███    ███   ███    ███ 
+    ███   ▀   ███    ███   ███    ███ 
+    ███     ▀█████████▀  ▀███████████ 
+    ███       ███          ███    ███ 
+    ███       ███          ███    ███ 
+   ▄████▀    ▄████▀        ███    █▀  
+                                      
+
+    
+    """)
+
+def menuu():
+    print("[-------------------------]")
+    print("%s[1] DM Spam.%s" % (yellow(), reset()))
+    print("[-------------------------]")
+    print("%s[2] Server Spam.%s" % (yellow(), reset()))
+    print("[-------------------------]")
+    print("%s[3] Status changer..%s" % (yellow(), reset()))
+    print("[-------------------------]")
+
+
+
+def status_rip(lol):
+    try:
+        headers = {"authorization": f"Bot {lol}"}
+        payload = {"status": "online"}
+        try:
+            r = requests.post(f"https://discord.com/api/v9/users/@me/settings", json=payload, headers=headers, proxies={"http": proxy})
+            if r.status_code == 200:
+                print(" [%s-%s] %sChanged Status.%s" % (green(), reset(), green(), reset()))
+            elif r.status_code == 429:
+                m = r.json()
+                print(" [%s-%s] Rape Limited" % (red(), reset()))
+                time.sleep(m['retry_after'])
+        except:
+            pass
+    except:
+        pass
+
+
+
+def asciigen(length):
+    asc = ''
+    for x in range(int(length)):
+        num = random.randrange(13000)
+        asc = asc + chr(num)
+    return asc
+
+def tokens_rip(lol):
+    try:
+        headers = {"authorization": f"Bot {lol}"}
+        if opzione in risposte:
+            payload = {"content": asciigen(1999)}
+        else:
+            payload = {"content": messaggio}
+        payload1 = {"recipients": [user_id]}
+        try:
+            r = requests.post(f"https://discord.com/api/v9/users/@me/channels", json=payload1, headers=headers, proxies={"http": proxy})
+            if r.status_code == 429:
+                m = r.json()
+                print(" [%s-%s] Rape Limited" % (red(), reset()))
+                time.sleep(m['retry_after'])
+        except:
+            pass
+        jsonn = r.json()
+        sussy = jsonn['id']
+        try:
+            while True:
+                r = requests.post(f"https://discord.com/api/v9/channels/{sussy}/messages", json=payload, headers=headers, proxies={"http": proxy})
+                if r.status_code == 200:
+                    print(" [%s-%s] %sSent message.%s" % (green(), reset(), green(), reset()))
+                elif r.status_code == 429:
+                    m = r.json()
+                    print(" [%s-%s] %sRape Limited%s" % (red(), reset(), red(), reset()))
+                    time.sleep(m['retry_after'])
+                else:
+                    print(" [%s/%s] %sFailed to send message.%s" % (magenta(), reset(), magenta(), reset()))
+                    break
+        except:
+            pass
+    except:
+        pass
+
+
+def server_rip(lol):
+    try:
+        headers = {"authorization": f"Bot {lol}"}
+        if opzione in risposte:
+            payload = {"content": f"{asciigen(1980)} @everyone"}
+        else:
+            payload = {"content": messaggio}
+        try:
+            while True:
+                r = requests.post(f"https://discord.com/api/v9/channels/{channel_id}/messages", json=payload, headers=headers, proxies={"http": proxy})
+                if r.status_code == 200:
+                    print(" [%s-%s] %sSent message.%s" % (green(), reset(), green(), reset()))
+                elif r.status_code == 429:
+                    m = r.json()
+                    print(" [%s-%s] %sRape Limited%s" % (red(), reset(), red(), reset()))
+                    time.sleep(m['retry_after'])
+                else:
+                    print(" [%s/%s] %sFailed to send message.%s" % (magenta(), reset(), magenta(), reset()))
+                    break
+        except:
+            pass
+    except:
+        pass
+
+
+def DMspam():
+    threads = []
+    for lol in bakas:
+        t = threading.Thread(target=tokens_rip, args=(lol,))
+        threads.append(t)
+        t.start()
+
+
+def SERVERspam():
+    threads = []
+    for lol in bakas:
+        t = threading.Thread(target=server_rip, args=(lol,))
+        threads.append(t)
+        t.start()
+
+def StatusSpam():
+    threads = []
+    for lol in bakas:
+        t = threading.Thread(target=status_rip, args=(lol,))
+        threads.append(t)
+        t.start()
+
+
+
+def server_spam():
+    global opzione
+    global messaggio
+    global channel_id
+    channel_id = str(input("\n [Insert the channel ID] > "))
+    opzione = (input("\n [Ascii?] Yes/No > "))
+    messaggio = str(input("\n [Insert the message] > "))
+    SERVERspam()
+
+
+def DM():
+    global opzione
+    global messaggio
+    global user_id
+    user_id = str(input("\n [Insert the User ID] > "))
+    opzione = (input("\n [Ascii?] Yes/No > "))
+    messaggio = str(input("\n [Insert the message] > "))
+    DMspam()
+
+theintro()
+menuu()
+try:
+    opzione = int(input("\n[%s+%s] %sEnter your option: %s" % (green(), reset(), green(), reset())))
+except:
+    print("\n[%s-%s] %sInvalid%s option! " % (red(), reset(), yellow(), reset()))
+if opzione == 1:
+    DM()
+elif opzione == 2:
+    server_spam()
+elif opzione == 3:
+    StatusSpam()
+else:
+    print("\n[%s-%s]%s Invalid%s option! " % (red(), reset(), yellow(), reset()))
